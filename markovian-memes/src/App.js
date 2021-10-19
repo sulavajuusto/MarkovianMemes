@@ -9,6 +9,8 @@ import ShareIcon from  '@material-ui/icons/Share';
 import GetAppIcon from  '@material-ui/icons/GetApp';
 import CachedIcon from  '@material-ui/icons/Cached';
 
+const images= ["/images/Meme1.png","/images/Meme2.jpg","/images/Meme3.jpg", "/images/Meme4.jpg"];
+var imageFlag = 0;
 
 function App() {
   return (
@@ -39,7 +41,7 @@ function App() {
       <div className="meme-container">
 
       <div className="image-container">
-            <Image src="/images/Meme1.png" alt="" fluid/>
+            <Image src="/images/Meme1.png" alt="" onClick={nextImage} fluid/>
             </div>
             <div className="w-100 d-flex justify-content-between"> 
               <Button variant="warning"><StarOutlineIcon/></Button>
@@ -51,6 +53,14 @@ function App() {
     </div>
 
   );
+}
+
+function nextImage(e) {
+  imageFlag += 1;
+  if (imageFlag > 3) {
+    imageFlag = 0;
+  }
+  e.target.setAttribute('src', images[imageFlag]);
 }
 
 export default App;
