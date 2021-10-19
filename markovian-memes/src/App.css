@@ -1,12 +1,13 @@
 .App {
   text-align: center;
+  background-color: #282c34;
+  min-height: 100vh;
 }
 
 
 
 .App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+  
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -17,6 +18,11 @@
 
 .App-link {
   color: #61dafb;
+}
+.image-container {
+  display: block;
+  margin: 0 auto;
+  max-width: 100%;
 }
 
 
