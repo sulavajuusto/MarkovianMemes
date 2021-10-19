@@ -24,5 +24,10 @@
   margin: 0 auto;
   max-width: 100%;
 }
+.meme-container {
+  display: block;
+  margin: 0 auto;
+  max-width: 1000px;
+}
 
 

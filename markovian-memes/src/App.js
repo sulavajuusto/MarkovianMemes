@@ -2,8 +2,13 @@ import './App.css';
 import ReactDOM from 'react-dom';
 import Navbar from 'react-bootstrap/Navbar'
 import Image from 'react-bootstrap/Image'
+import Button from 'react-bootstrap/Button'
 import { Nav, Container}  from 'react-bootstrap'
-import DeleteIcon from  '@material-ui/icons/Delete';
+import StarOutlineIcon from  '@material-ui/icons/StarOutline';
+import ShareIcon from  '@material-ui/icons/Share';
+import GetAppIcon from  '@material-ui/icons/GetApp';
+import CachedIcon from  '@material-ui/icons/Cached';
+
 
 function App() {
   return (
@@ -26,14 +31,22 @@ function App() {
 </Navbar>
       <header className="App-header">
        <h1>Markovian memes..</h1>
+ 
+              <CachedIcon fontSize="large" />
+
       </header>
+
+      <div className="meme-container">
+
       <div className="image-container">
             <Image src="/images/Meme1.png" alt="" fluid/>
-            <div> 
-              <DeleteIcon/>
-              <DeleteIcon/>
-              <DeleteIcon/>
             </div>
+            <div className="w-100 d-flex justify-content-between"> 
+              <Button variant="warning"><StarOutlineIcon/></Button>
+              <Button variant="success"><ShareIcon/></Button>
+              <Button variant="dark"><GetAppIcon/></Button>
+              
+      </div>
         </div>
     </div>
 
