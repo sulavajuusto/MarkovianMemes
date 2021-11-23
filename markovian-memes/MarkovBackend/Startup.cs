@@ -29,6 +29,16 @@ namespace MarkovBackend
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+
+            services.AddCors(options =>
+            {
+                options.AddDefaultPolicy(
+                    builder =>
+                    {
+                        builder.SetIsOriginAllowed(origin => new Uri(origin).Host == "localhost");
+                    });
+            });
+
             var builder = new SqlConnectionStringBuilder(Configuration.GetConnectionString("MarkovDb"));
             builder.UserID = Configuration["DbUser"];
             builder.Password = Configuration["DbPassword"];
@@ -38,6 +48,8 @@ namespace MarkovBackend
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "MarkovBackend", Version = "v1" });
             });
+
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -54,12 +66,15 @@ namespace MarkovBackend
 
             app.UseRouting();
 
+            app.UseCors();
+
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
             });
+
         }
     }
 }
