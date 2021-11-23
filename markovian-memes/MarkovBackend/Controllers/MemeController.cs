@@ -41,9 +41,13 @@ namespace MarkovBackend.Controllers
                 string[] lines = JsonConvert.DeserializeObject<string[]>(json);
                 var model = new MarkovSharp.TokenisationStrategies.StringMarkov(1);
                 model.Learn(lines);
-                result.Data = null; //tähän kuvangenerointi
                 result.MemeText += "\n" + model.Walk().First(); 
             }
+
+            var rand = new Random();
+            var files = Directory.GetFiles("Generator/Images/","*.jpg");
+            result.Data = System.IO.File.ReadAllBytes(files[rand.Next(files.Length)]);
+
             return Ok(result);
 
         }
