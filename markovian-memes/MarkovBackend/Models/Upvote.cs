@@ -9,6 +9,7 @@ namespace MarkovBackend.Models
     {
         public int UpvoteId { get; set; }
         public DateTime TimeStamp { get; set; }
+ 
 
         public int MemeId { get; set; }
         public virtual Meme Meme { get; set; }

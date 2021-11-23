@@ -11,5 +11,6 @@ namespace MarkovBackend.Models
         public string Name { get; set; }
         public string Location { get; set; }
         public byte[] Data { get; set; }
+        public string MimeType { get; set; }
     }
 }

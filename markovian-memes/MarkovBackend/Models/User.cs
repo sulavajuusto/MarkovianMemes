@@ -10,6 +10,7 @@ namespace MarkovBackend.Models
         public int UserId { get; set; }
         public string Username { get; set; }
         public DateTime LastLogin { get; set; }
+        public bool Deleted { get; set; }
 
         public virtual ICollection<Comment> Comments { get; set; }
         public virtual ICollection<SavedMeme> SavedMemes { get; set; }
