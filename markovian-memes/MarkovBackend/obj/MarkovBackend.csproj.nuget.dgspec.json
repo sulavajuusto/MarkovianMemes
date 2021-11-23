@@ -1,34 +1,26 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\EskoSalminen\\Documents\\Ohjelmointi\\Markov\\MarkovianMemes\\markovian-memes\\MarkovBackend\\MarkovBackend.csproj": {}
+    "C:\\Users\\ville\\www-design\\MarkovianMemes\\markovian-memes\\MarkovBackend\\MarkovBackend.csproj": {}
   },
   "projects": {
-    "C:\\Users\\EskoSalminen\\Documents\\Ohjelmointi\\Markov\\MarkovianMemes\\markovian-memes\\MarkovBackend\\MarkovBackend.csproj": {
+    "C:\\Users\\ville\\www-design\\MarkovianMemes\\markovian-memes\\MarkovBackend\\MarkovBackend.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\EskoSalminen\\Documents\\Ohjelmointi\\Markov\\MarkovianMemes\\markovian-memes\\MarkovBackend\\MarkovBackend.csproj",
+        "projectUniqueName": "C:\\Users\\ville\\www-design\\MarkovianMemes\\markovian-memes\\MarkovBackend\\MarkovBackend.csproj",
         "projectName": "MarkovBackend",
-        "projectPath": "C:\\Users\\EskoSalminen\\Documents\\Ohjelmointi\\Markov\\MarkovianMemes\\markovian-memes\\MarkovBackend\\MarkovBackend.csproj",
-        "packagesPath": "C:\\Users\\EskoSalminen\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\EskoSalminen\\Documents\\Ohjelmointi\\Markov\\MarkovianMemes\\markovian-memes\\MarkovBackend\\obj\\",
+        "projectPath": "C:\\Users\\ville\\www-design\\MarkovianMemes\\markovian-memes\\MarkovBackend\\MarkovBackend.csproj",
+        "packagesPath": "C:\\Users\\ville\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\ville\\www-design\\MarkovianMemes\\markovian-memes\\MarkovBackend\\obj\\",
         "projectStyle": "PackageReference",
-        "fallbackFolders": [
-          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages",
-          "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
-        ],
         "configFilePaths": [
-          "C:\\Users\\EskoSalminen\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+          "C:\\Users\\ville\\AppData\\Roaming\\NuGet\\NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "net5.0"
         ],
         "sources": {
-          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
-          "https://api.nuget.org/v3/index.json": {},
-          "https://etaika.pkgs.visualstudio.com/_packaging/etaika/nuget/v3/index.json": {}
+          "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
           "net5.0": {
@@ -46,6 +38,14 @@
         "net5.0": {
           "targetAlias": "net5.0",
           "dependencies": {
+            "MarkovSharp": {
+              "target": "Package",
+              "version": "[4.0.32, )"
+            },
+            "Microsoft.CSharp": {
+              "target": "Package",
+              "version": "[4.7.0, )"
+            },
             "Microsoft.EntityFrameworkCore": {
               "target": "Package",
               "version": "[5.0.12, )"
@@ -54,13 +54,25 @@
               "target": "Package",
               "version": "[5.0.12, )"
             },
+            "Microsoft.TeamFoundationServer.Client": {
+              "target": "Package",
+              "version": "[16.170.0, )"
+            },
             "Microsoft.VisualStudio.Azure.Containers.Tools.Targets": {
               "target": "Package",
               "version": "[1.11.1, )"
             },
+            "Newtonsoft.Json": {
+              "target": "Package",
+              "version": "[13.0.1, )"
+            },
             "Swashbuckle.AspNetCore": {
               "target": "Package",
               "version": "[5.6.3, )"
+            },
+            "System.Linq": {
+              "target": "Package",
+              "version": "[4.3.0, )"
             }
           },
           "imports": [
@@ -81,7 +93,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.403\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.401\\RuntimeIdentifierGraph.json"
         }
       }
     }
