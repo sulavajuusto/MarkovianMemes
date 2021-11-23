@@ -51,6 +51,8 @@ const Frontpage = (props) => {
     )
 }
 
+
+
 function nextImage(e) {
     imageFlag += 1;
     if (imageFlag > 3) {
@@ -69,20 +71,45 @@ function nextImage(e) {
     ctx.font = "50px Impact"; 
     ctx.fillStyle = "white";
     ctx.textAlign = "center";
+    ctx.strokeStyle = 'black';
     request.onload = function() {
         
         image.setAttribute('src', "data:image/jpg;base64," + request.response.data);
-        ctx.fillText(request.response.memeText.split("\n")[0],canvas.width/2,50);
-        ctx.fillText(request.response.memeText.split("\n")[1],canvas.width/2,590);
+        var text = parseText(request.response.memeText.split("\n")[0]);
+        ctx.fillText(text[0],canvas.width/2,50);
+        ctx.fillText(text[1],canvas.width/2,100);
+        ctx.strokeText(text[0],canvas.width/2,50);
+        ctx.strokeText(text[1],canvas.width/2,100);
+        var text2 = parseText(request.response.memeText.split("\n")[1]);
+        if (text2[1] != "") {
+            ctx.fillText(text2[0],canvas.width/2,540);
+            ctx.strokeText(text2[0],canvas.width/2,540);
+            ctx.fillText(text2[1],canvas.width/2,590);
+            ctx.strokeText(text2[1],canvas.width/2,590);
+        }
+        else {
+            ctx.fillText(text2[0],canvas.width/2,590);
+            ctx.strokeText(text2[0],canvas.width/2,590); 
+        }
+        
         
       };
     request.send();
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     ctx.drawImage(image,0,0)
-    
-     
-      
-    
+    ctx.stroke();
+  
+  }
+
+
+  function parseText(text) {
+      var text1 = text;
+      var text2 = "";
+      if (text.length > 30) {
+          var text1 = text.substring(0, text.indexOf(' ', 30));
+          var text2 = text.substring(text.indexOf(' ', 30), text.length - 1);
+      }
+      return [text1, text2];
   }
 
 export default Frontpage
