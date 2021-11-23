@@ -21,7 +21,8 @@ const Frontpage = (props) => {
                         <div className="meme-container">
 
                             <div className="image-container">
-                                <Image src="/images/Meme1.png" alt="" onClick={nextImage} fluid />
+                                    <canvas id="canvas" width="800"height="600" onClick={generateImage}></canvas>
+                                    <Image id="img" src="/images/Meme1.png" alt="" hidden/>
                             </div>
                             <div className="w-100 d-flex justify-content-between">
                                 {props.loggedIn ? <Button variant="warning"><StarOutlineIcon /></Button> : <span></span>}
@@ -56,6 +57,32 @@ function nextImage(e) {
       imageFlag = 0;
     }
     e.target.setAttribute('src', images[imageFlag]);
+  }
+
+  function generateImage(e) {
+    let request = new XMLHttpRequest();
+    request.open('GET', "https://localhost:5001/Meme");
+    request.responseType = 'json';
+    const image = document.getElementById('img');
+    const canvas = document.getElementById('canvas'); 
+    const ctx = canvas.getContext('2d');
+    ctx.font = "50px Impact"; 
+    ctx.fillStyle = "white";
+    ctx.textAlign = "center";
+    request.onload = function() {
+        
+        image.setAttribute('src', "data:image/jpg;base64," + request.response.data);
+        ctx.fillText(request.response.memeText.split("\n")[0],canvas.width/2,50);
+        ctx.fillText(request.response.memeText.split("\n")[1],canvas.width/2,590);
+        
+      };
+    request.send();
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    ctx.drawImage(image,0,0)
+    
+     
+      
+    
   }
 
 export default Frontpage
