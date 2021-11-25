@@ -8,8 +8,8 @@ const Login = (props) => {
     const onSuccess = async (res) => {
         console.log(res)
         console.log(res.profileObj)
-        loginService.login(res.tokenId)
-        var userid = await loginService.newOrOldUser(res.profileObj.email)
+        // loginService.login(res.tokenId)
+        var userid = await loginService.login(res.tokenId)
         var user = await loginService.getUserById(userid)
         props.login(user)
     }
