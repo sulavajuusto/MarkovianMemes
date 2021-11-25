@@ -123,5 +123,13 @@ namespace MarkovBackend.Controllers
 
             return Ok(downvote);
         }
+
+
+        // GET: api/Comments
+        [HttpGet("/AllSaved")]
+        public async Task<ActionResult<IEnumerable<Meme>>> GetAllSavedMemes()
+        {
+            return await _context.Memes.Where(x => x.SavedMemes.Count > 0).ToListAsync();
+        }
     }
 }
