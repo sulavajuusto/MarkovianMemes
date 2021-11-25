@@ -1,8 +1,6 @@
 using MarkovBackend.Models;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Authentication.Cookies;
-using Microsoft.AspNetCore.Authentication.Google;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Data.SqlClient;
@@ -12,6 +10,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -41,27 +40,14 @@ namespace MarkovBackend
                     });
             });
 
-                services.AddAuthentication(options => {
-                    options.DefaultScheme = CookieAuthenticationDefaults.AuthenticationScheme;
-                })
-                .AddCookie(options =>
-                {
-                    options.LoginPath = "/account/google-login";
-                })
-                .AddGoogle(options =>
-                {
-                    IConfigurationSection googleAuthNSection = Configuration.GetSection("Authentication:Google");
-                    options.ClientId = googleAuthNSection["ClientId"];
-                    options.ClientSecret = googleAuthNSection["ClientSecret"];
-                });
-
-            services.AddMvc();
-
             var builder = new SqlConnectionStringBuilder(Configuration.GetConnectionString("MarkovDb"));
             builder.UserID = Configuration["DbUser"];
             builder.Password = Configuration["DbPassword"];
             services.AddDbContext<MemeContext>(options => options.UseSqlServer(builder.ConnectionString));
-            services.AddControllers();
+            services.AddControllers().AddNewtonsoftJson(options =>
+            {
+                options.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
+            });
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "MarkovBackend", Version = "v1" });
@@ -76,24 +62,17 @@ namespace MarkovBackend
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
+            }
                 app.UseSwagger();
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "MarkovBackend v1"));
-            }
 
-            app.UseHttpsRedirection();
+            //app.UseHttpsRedirection();
 
             app.UseRouting();
 
-            app.UseCors(x => x
-                .AllowAnyMethod()
-                .AllowAnyHeader()
-                .SetIsOriginAllowed(origin => true) // allow any origin
-                .AllowCredentials()
-                );
+            app.UseCors();
 
             app.UseAuthorization();
-
-            app.UseAuthentication();
 
             app.UseEndpoints(endpoints =>
             {

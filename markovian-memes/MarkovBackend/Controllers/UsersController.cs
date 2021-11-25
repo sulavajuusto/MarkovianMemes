@@ -31,7 +31,7 @@ namespace MarkovBackend.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<User>> GetUser(int id)
         {
-            var user = await _context.Users.FindAsync(id);
+            var user = await _context.Users.Where(x => x.UserId == id).Include(x => x.SavedMemes).FirstOrDefaultAsync();
 
             if (user == null)
             {
@@ -83,31 +83,6 @@ namespace MarkovBackend.Controllers
             return CreatedAtAction("GetUser", new { id = user.UserId }, user);
         }
         
-        // POST: api/Users
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        [HttpPost("New")]
-        public async Task<ActionResult<User>> PostNewUserOrReturnId(string username)
-        {
-
-            User user =  await _context.Users.FirstOrDefaultAsync(e => e.Username == username);
-
-
-            var time = DateTime.Now;
-            if (user != null)
-            {
-                return Ok(user.UserId); 
-            }else
-            {
-                user = new User();
-                user.Username = username;
-                user.LastLogin = time; 
-            _context.Users.Add(user);
-            await _context.SaveChangesAsync();
-            }
-
-
-            return CreatedAtAction("PostNewUserOrReturnId", user.UserId);
-        }
 
         // Ei ole enää hard delete
         [HttpDelete("{id}")]

@@ -17,11 +17,16 @@ namespace MarkovBackend
             CreateHostBuilder(args).Build().Run();
         }
 
-        public static IHostBuilder CreateHostBuilder(string[] args) =>
-            Host.CreateDefaultBuilder(args)
-                .ConfigureWebHostDefaults(webBuilder =>
-                {
-                    webBuilder.UseStartup<Startup>();
-                });
+public static IHostBuilder CreateHostBuilder(string[] args) =>
+            Host.CreateDefaultBuilder(args).ConfigureAppConfiguration((context, builder) =>
+            {
+                //if (context.HostingEnvironment.IsProduction())
+                //{
+                //    builder.AddSystemsManager("/markovApi");
+                //}
+            }).ConfigureWebHostDefaults(webBuilder =>
+            {
+                webBuilder.UseStartup<Startup>();
+            });
     }
 }

@@ -5,7 +5,6 @@ using System.Linq;
 using Google.Apis.Auth;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Authentication;
-using Microsoft.AspNetCore.Authentication.Google;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.Extensions.Logging.Debug;
 using System;
