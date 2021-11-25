@@ -1,4 +1,4 @@
-const memes = [
+var memes = [
     {
         memeid: 1,
         memeText: "meme text",
@@ -41,5 +41,29 @@ const getMeme = (id) => {
     return foundMeme[0]
 }
 
+const createMeme =(image, text) => {
 
-export default {getMemes, getMeme}
+}
+
+const upvoteMeme =(id) => {
+    memes = memes.map(meme => {
+        if(meme.memeid === id) {
+            return {...meme, upvotes: meme.upvotes + 1}
+        } else {
+            return meme
+        }
+        
+    })
+}
+
+const downVoteMeme =(id) => {
+    memes = memes.map(meme => {
+        if(meme.memeid === id) {
+            return {...meme, upvotes: meme.upvotes - 1}
+        } else {
+            return meme
+        }
+        
+    })
+}
+export default {getMemes, getMeme, createMeme, upvoteMeme, downVoteMeme}

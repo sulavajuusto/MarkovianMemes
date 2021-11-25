@@ -32,8 +32,12 @@ namespace MarkovBackend.Controllers
                 string[] lines = JsonConvert.DeserializeObject<string[]>(json);
                 var model = new MarkovSharp.TokenisationStrategies.StringMarkov(1);
                 model.Learn(lines);
-                result.Data = null; //tähän kuvangenerointi
-                result.MemeText = model.Walk().First(); 
+                result.Data = null;
+                string text = model.Walk().First();
+                while (text.Length > 60) {
+                    text = model.Walk().First();
+                }
+                result.MemeText = text;
             }
             using (StreamReader r = new StreamReader("Generator/ends.json"))
             {
@@ -41,7 +45,11 @@ namespace MarkovBackend.Controllers
                 string[] lines = JsonConvert.DeserializeObject<string[]>(json);
                 var model = new MarkovSharp.TokenisationStrategies.StringMarkov(1);
                 model.Learn(lines);
-                result.MemeText += "\n" + model.Walk().First(); 
+                string text = model.Walk().First();
+                while (text.Length > 60) {
+                    text = model.Walk().First();
+                }
+                result.MemeText += "\n" + text;
             }
 
             var rand = new Random();

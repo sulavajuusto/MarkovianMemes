@@ -9,15 +9,16 @@ import Frontpage from './components/Frontpage'
 import Menu from './components/Menu'
 import Memelist from './components/Memelist';
 import MemePage from './components/MemePage'
-
+import Policy from './components/privacyPolicy'
+import About from './components/About'
 
 const App = () => {
 
-  const [loggedIn, setLoggedin] = useState(false);
+  const [loggedIn, setLoggedin] = useState(null);
   const [savedMemes, setSavedMemes] = useState(false);
 
-  const login = () => {
-    setLoggedin(true);
+  const login = (user) => {
+    setLoggedin(user);
   }
 
   return (
@@ -30,16 +31,26 @@ const App = () => {
         <Switch>
 
           <Route path="/memes/:id">
-            <MemePage />
+            <MemePage user={loggedIn}/>
           </Route>
           <Route path="/memes">
             <Memelist />
           </Route>
           <Route path="/top10">
-            <div>top10</div>
+            <div>
+              <p>Nothing here yet</p>
+            </div>
           </Route>
           <Route path="/userSettings">
-            <div>user settings</div>
+            <div>
+              <p>Nothing here yet</p>
+            </div>
+          </Route>
+          <Route path="/policy">
+            <Policy/>
+          </Route>
+          <Route path="/about">
+            <About/>
           </Route>
           <Route path="/">
 
