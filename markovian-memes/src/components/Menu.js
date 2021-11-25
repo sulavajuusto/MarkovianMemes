@@ -5,7 +5,7 @@ import {
 import Navbar from 'react-bootstrap/Navbar'
 
 import { Nav, Container } from 'react-bootstrap'
-
+import Login from './Login'
 const Menu = (props) => {
 
     return (
@@ -24,7 +24,7 @@ const Menu = (props) => {
                         {props.loggedIn ?
                             <Nav.Link href="/userSettings">Profile</Nav.Link>
                             :
-                            <Nav.Link onClick={props.login}>Login</Nav.Link>
+                            <Login/>
                         }
                     </Nav>
                 </Navbar.Collapse>
