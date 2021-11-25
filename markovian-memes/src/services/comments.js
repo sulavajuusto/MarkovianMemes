@@ -1,3 +1,4 @@
+import axios from 'axios'
 var comments = [
     {
         commentId: 1,
@@ -37,6 +38,16 @@ const newComment = (comment, user, id) => {
         memeid:id,
         userid:user.id
     })
+
+    console.log(id, user)
+    return axios.post('https://localhost:5001/api/Comments/', {message:comment, userid:user.id, memeid:id})
+        .then((res) => {
+            console.log("neworodluser: ", res)
+            console.log(res.data)
+            return res.data
+        })
+
+    
 }
 
 

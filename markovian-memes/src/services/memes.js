@@ -1,3 +1,6 @@
+import axios from 'axios'
+
+
 var memes = [
     {
         memeid: 1,
@@ -32,38 +35,44 @@ const getMemes = () => {
     //TODO: get memes from backend
     return (memes)
 }
-
+const getUserMemes = (id) => {
+    console.log("usermemes", id)
+    return axios.get('https://localhost:5001/api/Users/' + id)
+        .then((res) => {
+            console.log("usermemes: ", res)
+            console.log(res.data)
+            return res
+        })
+}
 
 const getMeme = (id) => {
-    const foundMeme = memes.filter(meme => {
-        return (meme.memeid === id)
-    })
-    return foundMeme[0]
+    console.log("memes", id)
+    return axios.get('https://localhost:5001/meme/' + id)
+        .then((res) => {
+            console.log("memes: ", res)
+            console.log(res.data)
+            return res
+        })
 }
 
-const createMeme =(image, text) => {
-
+const saveMeme = (memeid, userid) => {
+    console.log(memeid, userid)
+    return axios.post('https://localhost:5001/Save/' + memeid + "/" +userid)
+        .then((res) => {
+            console.log("neworodluser: ", res)
+            console.log(res.data)
+            return res.data
+        })
 }
 
-const upvoteMeme =(id) => {
-    memes = memes.map(meme => {
-        if(meme.memeid === id) {
-            return {...meme, upvotes: meme.upvotes + 1}
-        } else {
-            return meme
-        }
-        
-    })
+const upvoteMeme = (memeid, userid) => {
+    console.log(memeid, userid)
+    return axios.post('https://localhost:5001/Upvote/' + memeid + "/" +userid)
+        .then((res) => {
+            console.log("neworodluser: ", res)
+            console.log(res.data)
+            return res.data
+        })
 }
 
-const downVoteMeme =(id) => {
-    memes = memes.map(meme => {
-        if(meme.memeid === id) {
-            return {...meme, upvotes: meme.upvotes - 1}
-        } else {
-            return meme
-        }
-        
-    })
-}
-export default {getMemes, getMeme, createMeme, upvoteMeme, downVoteMeme}
+export default { getMemes, getMeme, saveMeme, upvoteMeme, getUserMemes}

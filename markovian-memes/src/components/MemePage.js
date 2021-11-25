@@ -23,11 +23,15 @@ const MemePage = (props) => {
     const [comment, setComment] = useState("")
     const id = parseInt(useParams().id)
     useEffect(() => {
-        const foundMeme = memeService.getMeme(id)
-        setMeme(foundMeme)
-        const foundComments = commentService.getCommentsForMeme(id)
-        console.log(foundComments)
-        setComments(foundComments)
+        const fetchData = async () => {
+            const foundMeme = await memeService.getMeme(id)
+            setMeme(foundMeme)
+            const foundComments = await commentService.getCommentsForMeme(id)
+            console.log(foundComments)
+            setComments(foundComments)
+        }
+        fetchData()
+
     }, [id])
     const newComment = async (e) => {
         e.preventDefault()
@@ -39,19 +43,20 @@ const MemePage = (props) => {
         setComments(foundComments)
     }
     if (meme) {
+        console.log("===", meme)
         return (
             <div>
 
                 <div className="meme-container">
 
                     <div className="image-container">
-                        <Image src={meme.image} alt="" fluid />
+                        <Image src={'data:image/jpeg;base64,' + meme.data.data} alt="" fluid />
                     </div>
                     <div className="w-100 d-flex justify-content-between">
 
                         <span>
-                            {props.user ? <Button variant="warning"><ArrowUpwardIcon onClick={() => memeService.upvoteMeme(id)}/></Button> : <span></span>}
-                            {props.user ? <Button variant="warning"><ArrowDownwardIcon onClick={() => memeService.downVoteMeme(id)}/></Button> : <span></span>}
+                            {props.user ? <Button variant="warning"><ArrowUpwardIcon onClick={() => memeService.upvoteMeme(id)} /></Button> : <span></span>}
+                            {props.user ? <Button variant="warning"><ArrowDownwardIcon onClick={() => memeService.downVoteMeme(id)} /></Button> : <span></span>}
                             <Button variant="success" ><ShareIcon /></Button>
                             <Button variant="dark"><GetAppIcon /></Button>
                         </span>
@@ -71,8 +76,8 @@ const MemePage = (props) => {
                     </ListGroup>
                     <Form onSubmit={newComment}>
                         <Form.Group className="mb-3" controlId="formComment">
-                            <Form.Label style={{"color": "white"}}>Add Comment</Form.Label>
-                            <Form.Control className="text-center" type="comment" placeholder="Enter Comment" onChange={(e) => {setComment(e.target.value)}}/>
+                            <Form.Label style={{ "color": "white" }}>Add Comment</Form.Label>
+                            <Form.Control className="text-center" type="comment" placeholder="Enter Comment" onChange={(e) => { setComment(e.target.value) }} />
                         </Form.Group>
 
                         <Button variant="primary" type="submit" disabled={!props.user}>

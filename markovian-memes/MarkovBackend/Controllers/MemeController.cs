@@ -77,9 +77,12 @@ namespace MarkovBackend.Controllers
             return Ok(meme);
         }
 
+        
+
         [HttpPost("/Save/{memeId}/{userId}")]
         public async Task<ActionResult<User>> SaveMeme(int memeId, int userId)
         {
+            
             Meme meme = await _context.Memes.FirstOrDefaultAsync(x => x.MemeId == memeId);
             User user = await _context.Users.FirstOrDefaultAsync(x => x.UserId == userId);
             if (meme == null || user == null)
@@ -90,7 +93,7 @@ namespace MarkovBackend.Controllers
             SavedMeme savedMeme = new SavedMeme();
 
             savedMeme.UserId = userId;
-            savedMeme.MemeId = userId;
+            savedMeme.MemeId = memeId;
             savedMeme.TimeStamp = DateTime.Now;
 
             _context.SavedMemes.Add(savedMeme);
