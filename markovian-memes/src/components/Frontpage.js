@@ -6,8 +6,7 @@ import ShareIcon from '@material-ui/icons/Share';
 import GetAppIcon from '@material-ui/icons/GetApp';
 import CachedIcon from '@material-ui/icons/Cached';
 import React, { useState, useEffect } from 'react';
-var imageFlag = 0;
-const images = ["/images/Meme1.png", "/images/Meme2.jpg", "/images/Meme3.jpg", "/images/Meme4.jpg"];
+
 const Frontpage = (props) => {
 
     useEffect(() => {
@@ -18,39 +17,26 @@ const Frontpage = (props) => {
             <header className="App-header">
                 <h1>Markovian memes..</h1>
             </header>
-            {
-                (!props.savedMemes) ?
-                    <div>
-                        <CachedIcon fontSize="large" style={{ "marginTop": "2%", "color": "white" }} />
-                        <div className="meme-container">
+            <div>
+                <CachedIcon fontSize="large" style={{ "marginTop": "2%", "color": "white" }} />
+                <div className="meme-container">
 
-                            <div className="image-container">
-                                <canvas id="canvas" width="800" height="600" onClick={generateImage}></canvas>
-                                <Image id="img" src="/images/Meme1.png" alt="" hidden />
-                            </div>
-                            <div className="w-100 d-flex justify-content-between">
-                                {props.loggedIn ? <Button variant="warning"><StarOutlineIcon /></Button> : <span></span>}
-
-                                <span>
-                                    <Button variant="success" ><ShareIcon /></Button>
-                                    <Button variant="dark"><GetAppIcon /></Button>
-                                </span>
-
-                            </div>
-                        </div>
+                    <div className="image-container">
+                        <canvas id="canvas" width="800" height="600" onClick={generateImage}></canvas>
+                        <Image id="img" src="/images/Meme1.png" alt="" hidden />
                     </div>
-                    :
-                    <div>
-                        <div className=" image-container">
+                    <div className="w-100 d-flex justify-content-between">
+                        {props.loggedIn ? <Button variant="warning"><StarOutlineIcon /></Button> : <span></span>}
+                        
+                        <span>
+                            <Button variant="success" ><ShareIcon /></Button>
+                            <Button variant="dark"><GetAppIcon /></Button>
+                        </span>
 
-                            <Image style={{ "width": "20%" }} className="w-20" src="/images/Meme1.png" alt="" thumbnail />
-
-                            <Image style={{ "width": "20%" }} className="w-20" src="/images/Meme2.jpg" alt="" thumbnail />
-
-                            <Image style={{ "width": "20%" }} className="w-20" src="/images/Meme3.jpg" alt="" thumbnail />
-                        </div>
                     </div>
-            }
+                </div>
+            </div>
+
         </div>
     )
 }
@@ -71,30 +57,34 @@ function generateImage() {
     request.onload = function () {
 
         image.setAttribute('src', "data:image/jpg;base64," + request.response.data);
-        var text = parseText(request.response.memeText.split("\n")[0]);
-        ctx.fillText(text[0], canvas.width / 2, 50);
-        ctx.fillText(text[1], canvas.width / 2, 100);
-        ctx.strokeText(text[0], canvas.width / 2, 50);
-        ctx.strokeText(text[1], canvas.width / 2, 100);
-        var text2 = parseText(request.response.memeText.split("\n")[1]);
-        if (text2[1] != "") {
-            ctx.fillText(text2[0], canvas.width / 2, 540);
-            ctx.strokeText(text2[0], canvas.width / 2, 540);
-            ctx.fillText(text2[1], canvas.width / 2, 590);
-            ctx.strokeText(text2[1], canvas.width / 2, 590);
+        image.onload = () => {
+            ctx.drawImage(image, 0, 0)
+            var text = parseText(request.response.memeText.split("\n")[0]);
+            ctx.fillText(text[0], canvas.width / 2, 50);
+            ctx.fillText(text[1], canvas.width / 2, 100);
+            ctx.strokeText(text[0], canvas.width / 2, 50);
+            ctx.strokeText(text[1], canvas.width / 2, 100);
+            var text2 = parseText(request.response.memeText.split("\n")[1]);
+            if (text2[1] != "") {
+                ctx.fillText(text2[0], canvas.width / 2, 540);
+                ctx.strokeText(text2[0], canvas.width / 2, 540);
+                ctx.fillText(text2[1], canvas.width / 2, 590);
+                ctx.strokeText(text2[1], canvas.width / 2, 590);
+            }
+            else {
+                ctx.fillText(text2[0], canvas.width / 2, 590);
+                ctx.strokeText(text2[0], canvas.width / 2, 590);
+            }
         }
-        else {
-            ctx.fillText(text2[0], canvas.width / 2, 590);
-            ctx.strokeText(text2[0], canvas.width / 2, 590);
-        }
+
+
+
 
 
     };
     request.send();
     ctx.clearRect(0, 0, canvas.width, canvas.height);
-    ctx.drawImage(image, 0, 0)
     ctx.stroke();
-
 }
 
 

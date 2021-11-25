@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Google;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.Extensions.Logging.Debug;
-
+using System;
 namespace MarkovBackend.Controllers
 {
     [Route("[controller]")]
@@ -17,9 +17,10 @@ namespace MarkovBackend.Controllers
     {
         [Route("google-login")]
         [HttpPost]
-        public async Task<IActionResult> GoogleLogin(string idToken)
+        public async Task<IActionResult> GoogleLogin([FromBody] string idToken)
         {
             try {
+                Console.Write(idToken);
                 await GoogleJsonWebSignature.ValidateAsync(idToken);
                 return Ok("Authentication succesful");
             }

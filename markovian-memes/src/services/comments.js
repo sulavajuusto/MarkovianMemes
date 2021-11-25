@@ -1,4 +1,4 @@
-const comments = [
+var comments = [
     {
         commentId: 1,
         message: "nice",
@@ -22,11 +22,22 @@ const comments = [
     }
 ]
 
-
 const getCommentsForMeme = (id) => {
     return (comments.filter(comment => {
         return (comment.memeid === id)
     }))
 }
 
-export default { getCommentsForMeme } 
+const newComment = (comment, user, id) => {
+    comments = comments.concat({
+        commentId: 5,
+        message:comment,
+        flagged:false,
+        timeStamp: Date.now(),
+        memeid:id,
+        userid:user.id
+    })
+}
+
+
+export default { getCommentsForMeme, newComment } 

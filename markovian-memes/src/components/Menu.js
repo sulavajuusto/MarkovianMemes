@@ -1,30 +1,38 @@
 import {
     BrowserRouter as Router,
     Switch, Route, Link
-  } from 'react-router-dom';
+} from 'react-router-dom';
 import Navbar from 'react-bootstrap/Navbar'
+import { LinkContainer } from 'react-router-bootstrap'
 
 import { Nav, Container } from 'react-bootstrap'
 import Login from './Login'
+import Logout from './Logout'
 const Menu = (props) => {
 
     return (
         <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark">
             <Container>
-                <Navbar.Brand href="/" onClick={() => props.setSavedMemes(false)} >Markovian Memes</Navbar.Brand>
+                <LinkContainer to="/"><Nav.Link>Markovian Memes</Nav.Link></LinkContainer>
                 <Navbar.Toggle aria-controls="responsive-navbar-nav" />
                 <Navbar.Collapse id="responsive-navbar-nav">
                     <Nav className="me-auto">
-                        <Nav.Link href="/memes">Memes</Nav.Link>
-                        <Nav.Link href="/top10">Top10</Nav.Link>
-                        {props.loggedIn ? <Nav.Link onClick={() => props.setSavedMemes(true)}>Saved memes</Nav.Link> : null}
-
+                        <LinkContainer to="/memes"><Nav.Link>Memes</Nav.Link></LinkContainer>
+                        <LinkContainer to="/top10"><Nav.Link>Top10</Nav.Link></LinkContainer>
+                        {props.loggedIn ? <LinkContainer to="/savedMemes"><Nav.Link>Saved Memes</Nav.Link></LinkContainer> : null}
+                        <LinkContainer to="/policy"><Nav.Link>Privacy policy</Nav.Link></LinkContainer>
+                        <LinkContainer to="/about"><Nav.Link>About</Nav.Link></LinkContainer>
+                        
+                        
                     </Nav>
                     <Nav>
-                        {props.loggedIn ?
-                            <Nav.Link href="/userSettings">Profile</Nav.Link>
+                        {props.loggedIn !== null ?
+                            <Nav>
+                                <LinkContainer to="/userSettings"><Nav.Link>Profile</Nav.Link></LinkContainer>
+                                <Logout login={props.login}></Logout>
+                            </Nav>
                             :
-                            <Login/>
+                            <Login login={props.login} />
                         }
                     </Nav>
                 </Navbar.Collapse>

@@ -1,12 +1,17 @@
 import { GoogleLogin } from 'react-google-login';
 import { Nav} from 'react-bootstrap'
+import loginService from '../services/login'
 
-const clientId = "603636855275-79nri9u60ms5v07da7rjk222q77fl7cr.apps.googleusercontent.com"
-const Login = () => {
+const clientId = process.env.REACT_APP_GOOGLE_CLIENT_ID
+const Login = (props) => {
 
-    const onSuccess = (res) => {
+    const onSuccess = async (res) => {
         console.log(res)
         console.log(res.profileObj)
+        loginService.login(res.tokenId)
+        var userid = await loginService.newOrOldUser(res.profileObj.email)
+        var user = await loginService.getUserById(userid)
+        props.login(user)
     }
     const onFailure = (res) => {
         console.log(res)
@@ -26,7 +31,7 @@ const Login = () => {
                 onFailure={onFailure}
                 cookiePolicy={'single_host_origin'}
                 style={{ marginTop: '100px' }}
-                isSignedIn={true}
+                isSignedIn={false}
                 render= {renderProps => (
                     <Nav.Link onClick={renderProps.onClick} disabled={renderProps.disabled}> Log in with google</Nav.Link>
                 )}
