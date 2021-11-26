@@ -91,11 +91,11 @@ const Frontpage = (props) => {
                         <canvas id="canvas" width="800" height="600" onClick={generateImage}></canvas>
                         <Image id="img" src="/images/Meme1.png" alt="" hidden />
                     </div>
-                    <div className="w-100 d-flex justify-content-between">
+                    <div className="w-100 d-flex justify-content-center">
                         {props.loggedIn ? <Button variant="warning"><StarOutlineIcon /></Button> : <span></span>}
                         
                         <span>
-                            <Button variant="success" onClick={saveMeme_} disabled={!props.loggedIn}><ShareIcon /></Button>
+                            <Button variant="success" onClick={saveMeme_} disabled={!props.loggedIn}>Favorite thsis meme</Button>
                             <Button variant="dark" onClick={saveImage}><GetAppIcon /></Button>
                         </span>
 

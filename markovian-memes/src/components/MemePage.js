@@ -68,11 +68,10 @@ const MemePage = (props) => {
                         <canvas id="canvas" width="800" height="600"></canvas>
                         <Image id="img" alt="" hidden fluid />
                     </div>
-                    <div className="w-100 d-flex justify-content-between">
+                    <div className="w-100 d-flex justify-content-center">
 
                         <span>
                             {props.user ? <Button variant="warning"><ArrowUpwardIcon onClick={() => memeService.upvoteMeme(id, props.user)} /></Button> : <span></span>}
-                            <Button variant="success" ><ShareIcon /></Button>
                             <Button variant="dark" onClick={saveImage}><GetAppIcon /></Button>
                         </span>
 
