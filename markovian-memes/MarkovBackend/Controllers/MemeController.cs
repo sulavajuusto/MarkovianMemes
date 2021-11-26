@@ -116,7 +116,7 @@ namespace MarkovBackend.Controllers
             Upvote downvote = new Upvote();
 
             downvote.UserId = userId;
-            downvote.MemeId = userId;
+            downvote.MemeId = memeId;
             downvote.TimeStamp = DateTime.Now;
             downvote.UserId = userId;
 
@@ -132,7 +132,7 @@ namespace MarkovBackend.Controllers
         [HttpGet("/AllSaved")]
         public async Task<ActionResult<IEnumerable<Meme>>> GetAllSavedMemes()
         {
-            return await _context.Memes.Where(x => x.SavedMemes.Count > 0).ToListAsync();
+            return await _context.Memes.Where(x => x.SavedMemes.Count > 0).Include(x => x.Comments).Include(x => x.Upvotes).ToListAsync();
         }
     }
 }

@@ -12,6 +12,7 @@ import MemePage from './components/MemePage'
 import Policy from './components/privacyPolicy'
 import About from './components/About'
 import UserMemes from './components/UserMemes'
+import Top10 from './components/Top10'
 
 const App = () => {
 
@@ -38,9 +39,7 @@ const App = () => {
             <Memelist />
           </Route>
           <Route path="/top10">
-            <div>
-              <p>Nothing here yet</p>
-            </div>
+            <Top10 user={loggedIn}/>
           </Route>
           <Route path="/userSettings">
             <div>

@@ -29,6 +29,9 @@ import {
             })
             var results = await Promise.all(promises)
             console.log("results:", results)
+            results = results.sort((a, b) => {
+                return b.upvotes.length - a.upvotes.length
+            }).slice(0,10)
             setMemes(results)
         }
         
