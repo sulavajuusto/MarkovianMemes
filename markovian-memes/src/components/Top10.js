@@ -52,7 +52,7 @@ import {
                                 <Image src={'data:image/jpeg;base64,' + meme.fetchedMeme.data.data} style={{ "width": "20%" }} className="w-20" alt="" thumbnail></Image>
                             </Link>
 
-                            <p></p>
+                            <p>{meme.fetchedMeme.data.memeText}</p>
                             <p>upvotes: {meme.upvotes.length}, comments: {meme.comments.length}</p>
                         </div>
 

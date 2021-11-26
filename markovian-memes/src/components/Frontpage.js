@@ -7,11 +7,16 @@ import GetAppIcon from '@material-ui/icons/GetApp';
 import CachedIcon from '@material-ui/icons/Cached';
 import React, { useState, useEffect } from 'react';
 import MemeService from '../services/memes'
+import { ToastContainer, toast } from 'react-toastify';
+  import 'react-toastify/dist/ReactToastify.css';
 
 const Frontpage = (props) => {
     const [memeid, setMemeid] = useState(null)
-    const saveMeme_ =() => {
-        MemeService.saveMeme(memeid, props.loggedIn.userId)
+    
+    const saveMeme_ =async () => {
+        await MemeService.saveMeme(memeid, props.loggedIn.userId)
+        toast('Meme saved. you can find it on your saved memes')
+
     }
 
     const generateImage = () => {
@@ -80,6 +85,8 @@ const Frontpage = (props) => {
     }
     return (
         <div>
+            
+            <ToastContainer />
             <header className="App-header">
                 <h1>Markovian memes..</h1>
             </header>
@@ -92,7 +99,6 @@ const Frontpage = (props) => {
                         <Image id="img" src="/images/Meme1.png" alt="" hidden />
                     </div>
                     <div className="w-100 d-flex justify-content-center">
-                        {props.loggedIn ? <Button variant="warning"><StarOutlineIcon /></Button> : <span></span>}
                         
                         <span>
                             <Button variant="success" onClick={saveMeme_} disabled={!props.loggedIn}>Favorite thsis meme</Button>
@@ -102,7 +108,7 @@ const Frontpage = (props) => {
                     </div>
                 </div>
             </div>
-
+            
         </div>
     )
 }
