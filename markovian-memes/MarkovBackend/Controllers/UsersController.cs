@@ -20,12 +20,6 @@ namespace MarkovBackend.Controllers
             _context = context;
         }
 
-        // GET: api/Users
-        [HttpGet]
-        public async Task<ActionResult<IEnumerable<User>>> GetUsers()
-        {
-            return await _context.Users.ToListAsync();
-        }
 
         // GET: api/Users/5
         [HttpGet("{id}")]
@@ -100,46 +94,6 @@ namespace MarkovBackend.Controllers
             return NoContent();
         }
 
-        // POST: api/Users/new
-
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-
-        [HttpPost("New")]
-
-        public async Task<ActionResult<User>> PostNewUserOrReturnId(User user1)
-
-        {
-
-            User user = await _context.Users.FirstOrDefaultAsync(e => e.Username == user1.Username);
-
-            var time = DateTime.Now;
-
-            if (user != null)
-
-            {
-
-                return Ok(user.UserId);
-
-            }
-            else
-
-            {
-
-                user = new User();
-
-                user.Username = user1.Username;
-
-                user.LastLogin = time;
-
-                _context.Users.Add(user);
-
-                await _context.SaveChangesAsync();
-
-            }
-
-            return CreatedAtAction("PostNewUserOrReturnId", user.UserId);
-
-        }
         private bool UserExists(int id)
         {
             return _context.Users.Any(e => e.UserId == id);
