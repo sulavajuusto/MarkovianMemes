@@ -29,6 +29,7 @@ const MemePage = (props) => {
             const foundComments = await commentService.getCommentsForMeme(id)
             console.log(foundComments)
             setComments(foundComments)
+            generateImage(foundMeme.data.data, foundMeme.data.memeText)
         }
         fetchData()
 
@@ -38,9 +39,23 @@ const MemePage = (props) => {
         console.log(e)
         console.log(comment)
         await commentService.newComment(comment, props.user.userId, id)
-        const foundComments = commentService.getCommentsForMeme(id)
+        const foundComments = await commentService.getCommentsForMeme(id)
         console.log(foundComments)
         setComments(foundComments)
+    }
+    const saveImage = () => {
+        var canvas = document.getElementById("canvas");
+        var dataURL = canvas.toDataURL("image/png");
+        var newTab = window.open('about:blank', 'image from canvas');
+        newTab.document.write("<img src='" + dataURL + "' alt='from canvas'/>");
+
+        
+        var link = document.createElement('a');
+        link.download = 'meme.png';
+        link.href = dataURL
+        link.click();
+          
+
     }
     if (meme) {
         console.log("===", meme)
@@ -50,15 +65,15 @@ const MemePage = (props) => {
                 <div className="meme-container">
 
                     <div className="image-container">
-                        <Image src={'data:image/jpeg;base64,' + meme.data.data} alt="" fluid />
+                        <canvas id="canvas" width="800" height="600"></canvas>
+                        <Image id="img" alt="" hidden fluid />
                     </div>
                     <div className="w-100 d-flex justify-content-between">
 
                         <span>
-                            {props.user ? <Button variant="warning"><ArrowUpwardIcon onClick={() => memeService.upvoteMeme(id)} /></Button> : <span></span>}
-                            {props.user ? <Button variant="warning"><ArrowDownwardIcon onClick={() => memeService.downVoteMeme(id)} /></Button> : <span></span>}
+                            {props.user ? <Button variant="warning"><ArrowUpwardIcon onClick={() => memeService.upvoteMeme(id, props.user)} /></Button> : <span></span>}
                             <Button variant="success" ><ShareIcon /></Button>
-                            <Button variant="dark"><GetAppIcon /></Button>
+                            <Button variant="dark" onClick={saveImage}><GetAppIcon /></Button>
                         </span>
 
                     </div>
@@ -69,7 +84,7 @@ const MemePage = (props) => {
                         {comments.map(comment => {
                             return (
                                 <ListGroup.Item id={comment.commentId}>
-                                    {comment.timeStamp}: {comment.message}
+                                    {comment.message}
                                 </ListGroup.Item>
                             )
                         })}
@@ -99,4 +114,53 @@ const MemePage = (props) => {
 
 }
 
+const generateImage = (data, memetext) => {
+    const image = document.getElementById('img');
+    const canvas = document.getElementById('canvas');
+    const ctx = canvas.getContext('2d');
+    ctx.font = "50px Impact";
+    ctx.fillStyle = "white";
+    ctx.textAlign = "center";
+    ctx.strokeStyle = 'black';
+    image.setAttribute('src', "data:image/jpg;base64," + data);
+    image.onload = () => {
+        ctx.drawImage(image, 0, 0)
+        var text = parseText(memetext.split("\n")[0]);
+        ctx.fillText(text[0], canvas.width / 2, 50);
+        ctx.fillText(text[1], canvas.width / 2, 100);
+        ctx.strokeText(text[0], canvas.width / 2, 50);
+        ctx.strokeText(text[1], canvas.width / 2, 100);
+        var text2 = parseText(memetext.split("\n")[1]);
+        if (text2[1] != "") {
+            ctx.fillText(text2[0], canvas.width / 2, 540);
+            ctx.strokeText(text2[0], canvas.width / 2, 540);
+            ctx.fillText(text2[1], canvas.width / 2, 590);
+            ctx.strokeText(text2[1], canvas.width / 2, 590);
+        }
+        else {
+            ctx.fillText(text2[0], canvas.width / 2, 590);
+            ctx.strokeText(text2[0], canvas.width / 2, 590);
+        }
+
+
+
+
+
+
+    };
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    ctx.stroke();
+    return
+
+}
+
+function parseText(text) {
+    var text1 = text;
+    var text2 = "";
+    if (text.length > 30) {
+        var text1 = text.substring(0, text.indexOf(' ', 30));
+        var text2 = text.substring(text.indexOf(' ', 30), text.length - 1);
+    }
+    return [text1, text2];
+}
 export default MemePage

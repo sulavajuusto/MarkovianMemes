@@ -1,39 +1,17 @@
 import axios from 'axios'
 
 
-var memes = [
-    {
-        memeid: 1,
-        memeText: "meme text",
-        createdOnDate: "2021-10-19",
-        comments: [1, 2],
-        upvotes: 15,
-        image: "/images/Meme1.png"
-
-    },
-    {
-        memeid: 2,
-        memeText: "meme text",
-        createdOnDate: "2021-10-19",
-        comments: [3],
-        upvotes: 2,
-        image: "/images/Meme2.jpg"
-
-    },
-    {
-        memeid: 3,
-        memeText: "meme text",
-        createdOnDate: "2021-10-19",
-        comments: [],
-        upvotes: 3,
-        image: "/images/Meme3.jpg"
-    }
-]
 
 
 const getMemes = () => {
     //TODO: get memes from backend
-    return (memes)
+    return axios.get('https://localhost:5001/allSaved/')
+        .then((res) => {
+            console.log("allMemes: ", res)
+            console.log(res.data)
+            return res
+        })
+    
 }
 const getUserMemes = (id) => {
     console.log("usermemes", id)
@@ -67,7 +45,7 @@ const saveMeme = (memeid, userid) => {
 
 const upvoteMeme = (memeid, userid) => {
     console.log(memeid, userid)
-    return axios.post('https://localhost:5001/Upvote/' + memeid + "/" +userid)
+    return axios.post('https://localhost:5001/Upvote/' + memeid + "/" +userid.userId)
         .then((res) => {
             console.log("neworodluser: ", res)
             console.log(res.data)

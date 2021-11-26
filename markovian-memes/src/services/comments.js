@@ -1,49 +1,19 @@
 import axios from 'axios'
-var comments = [
-    {
-        commentId: 1,
-        message: "nice",
-        flagged: true,
-        timeStamp: '1900-01-25',
-        memeid: 1
-    },
-    {
-        commentId: 2,
-        message: "very good",
-        flagged: true,
-        timeStamp: '1900-01-25',
-        memeid: 1
-    },
-    {
-        commentId: 3,
-        message: "cool",
-        flagged: true,
-        timeStamp: '1900-01-25',
-        memeid: 2
-    }
-]
+
 
 const getCommentsForMeme = (id) => {
-    return (comments.filter(comment => {
-        return (comment.memeid === id)
-    }))
+    return axios.get('https://localhost:5001/api/Comments/meme/' + id) 
+        .then((res) => {
+            console.log("getCommentsformeme,", res)
+            return res.data
+        })
 }
 
 const newComment = (comment, user, id) => {
-    comments = comments.concat({
-        commentId: 5,
-        message:comment,
-        flagged:false,
-        timeStamp: Date.now(),
-        memeid:id,
-        userid:user.id
-    })
-
     console.log(id, user)
-    return axios.post('https://localhost:5001/api/Comments/', {message:comment, userid:user.id, memeid:id})
+    return axios.post('https://localhost:5001/api/Comments/', {message:comment, userid:user, memeid:id})
         .then((res) => {
-            console.log("neworodluser: ", res)
-            console.log(res.data)
+            console.log("Commentadded: ", res)
             return res.data
         })
 

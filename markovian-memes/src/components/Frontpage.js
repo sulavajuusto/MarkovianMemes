@@ -62,6 +62,22 @@ const Frontpage = (props) => {
     useEffect(() => {
         generateImage()
     }, [])
+
+    const saveImage = () => {
+        console.log("savedimage")
+        var canvas = document.getElementById("canvas");
+        var dataURL = canvas.toDataURL("image/png");
+        var newTab = window.open('about:blank', 'image from canvas');
+        newTab.document.write("<img src='" + dataURL + "' alt='from canvas'/>");
+
+        
+        var link = document.createElement('a');
+        link.download = 'meme.png';
+        link.href = dataURL
+        link.click();
+          
+
+    }
     return (
         <div>
             <header className="App-header">
@@ -80,7 +96,7 @@ const Frontpage = (props) => {
                         
                         <span>
                             <Button variant="success" onClick={saveMeme_} disabled={!props.loggedIn}><ShareIcon /></Button>
-                            <Button variant="dark"><GetAppIcon /></Button>
+                            <Button variant="dark" onClick={saveImage}><GetAppIcon /></Button>
                         </span>
 
                     </div>

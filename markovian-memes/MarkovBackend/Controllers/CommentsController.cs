@@ -41,6 +41,14 @@ namespace MarkovBackend.Controllers
             return comment;
         }
 
+        [HttpGet("meme/{id}")]
+        public async Task<ActionResult<IEnumerable<Comment>>> GetCommentsByMeme(int id)
+        {
+            var comments = await _context.Comments.Where(x => x.MemeId == id).ToListAsync();
+
+            return comments;
+        }
+
         // PUT: api/Comments/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]

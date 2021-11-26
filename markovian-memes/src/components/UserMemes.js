@@ -70,7 +70,7 @@ const Memelist = (props) => {
                     )
                 })
                 :
-                <p></p>}
+                <p>Loading</p>}
         </div>
     )
 }
