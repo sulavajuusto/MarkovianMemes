@@ -91,7 +91,7 @@ const Frontpage = (props) => {
                 <h1>Markovian memes..</h1>
             </header>
             <div>
-                <CachedIcon fontSize="large" style={{ "marginTop": "2%", "color": "white" }} />
+                <p>Press image to get a new Meme!</p>
                 <div className="meme-container">
 
                     <div className="image-container">
@@ -101,7 +101,12 @@ const Frontpage = (props) => {
                     <div className="w-100 d-flex justify-content-center">
                         
                         <span>
-                            <Button variant="success" onClick={saveMeme_} disabled={!props.loggedIn}>Favorite thsis meme</Button>
+                            {!props.loggedIn ? 
+                                <Button variant="success" onClick={saveMeme_} disabled={true}>Log in to Favorite this meme</Button>
+                                :
+                                <Button variant="success" onClick={saveMeme_} >Favorite thsis meme</Button>
+                                }
+                            
                             <Button variant="dark" onClick={saveImage}><GetAppIcon /></Button>
                         </span>
 
